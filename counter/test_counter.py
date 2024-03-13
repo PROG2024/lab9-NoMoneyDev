@@ -7,3 +7,25 @@
 
    You can use pytest or unittest.
 """
+
+import unittest
+from counter import Counter
+
+class Test(unittest.TestCase):
+    def setUp(self):
+        self.counter = Counter()
+
+    def test_singleton(self):
+        new_counter = Counter()
+        self.assertIs(new_counter, self.counter)
+
+    def test_count_sharing(self):
+        new_counter = Counter()
+        self.counter.increment()
+        self.assertEqual(new_counter.count, self.counter.count)
+
+    def test_new_counter_after_increment(self):
+        self.counter.increment()
+        self.counter.increment()
+        new_counter = Counter()
+        self.assertEqual(new_counter.count, self.counter.count)
